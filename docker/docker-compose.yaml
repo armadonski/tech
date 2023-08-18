@@ -1,0 +1,48 @@
+services:
+  database:
+    build:
+      context: ./mysql
+      args:
+        MYSQL_VERSION: 8.0.32
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_USER: ${DATABASE_USER}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+  php:
+    build:
+      context: ./php
+      args:
+        PHP_VERSION: 8.2.1-fpm-alpine3.17
+    volumes:
+      - ../backend:/var/www/subliminator
+    expose:
+      - 9000
+    links:
+      - database
+  nginx:
+    build:
+      context: ./nginx
+      args:
+        NGINX_VERSION: 1.23.3
+    ports:
+      - 80:80
+    links:
+      - node
+      - database
+      - php
+  node:
+    build:
+      context: ./node
+      args:
+        NODE_VERSION: 19-alpine3.16
+    volumes:
+      - ../frontend:/app
+    expose:
+      - 4200
+    links:
+      - php
