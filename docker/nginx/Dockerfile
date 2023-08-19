@@ -8,7 +8,7 @@ COPY ./php.conf /etc/nginx/conf.d/fastcgi/php.conf
 COPY ./symfony.conf /etc/nginx/conf.d/default.conf
 COPY ./upstream.conf /etc/nginx/conf.d/upstream.conf
 
-WORKDIR /var/www/subliminator
+WORKDIR /var/www/tech
 
 EXPOSE 80
 

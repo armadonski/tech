@@ -10,12 +10,12 @@ npm-install:
 
 .PHONY docker-up:
 docker-up:
-	docker compose -f docker/docker-compose.yaml up --build -d
+	docker compose -f docker/docker-compose.yaml up --build -d 
 
 .PHONY: run-migrations
 run-migrations:
 	docker exec docker-php-1 wait-for-it database:3306
-	docker exec docker-php-1 bin/console do:mi:mi --no-interaction
+	# docker exec docker-php-1 bin/console do:mi:mi --no-interaction
 
 .PHONY stop-development:
 stop-development:
